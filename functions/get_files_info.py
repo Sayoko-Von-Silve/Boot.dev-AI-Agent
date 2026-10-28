@@ -9,17 +9,20 @@ def get_files_info(working_directory: str, directory: str = ".") -> str:
     except Exception as e:
         return f'Error: during working_directory/directory check; {e}'
 
-    if not os.path.isdir(target_dir):
-        return f'Error: "{directory}" is not a directory'
-
     if not valid_target_dir:
-        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
+        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'    
+    elif not os.path.isdir(target_dir):
+        return f'Error: "{directory}" is not a directory'
     else:
         info = "Files in directory:\n"
         try:
-            for item in os.listdir(target_dir):
+            items = os.listdir(target_dir)
+            if not items:
+                info += "No files found in directory."
+                return f'Success: "{directory}" is within the working directory\n\n{info}'
+            for item in items:
                 info += f'{item}: file_size={os.path.getsize(os.path.join(target_dir, item))} bytes, is_dir={os.path.isdir(os.path.join(target_dir, item))}\n'
+            info = info[:-1] # Remove the last newline character
         except Exception as e:
             return f'Error: during listing files in directory; {e}'
-        info = info[:-1] # Remove the last newline character
         return f'Success: "{directory}" is within the working directory\n\n{info}'
