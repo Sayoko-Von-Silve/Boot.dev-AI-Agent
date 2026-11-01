@@ -12,3 +12,6 @@ it access to, if you take and use it yourself.
 As a side note, I did not really enjoy making this... Much
 prefer making games, like my asteroids project. I won't
 be doing more than this for this project.
+
+...One additional note, this requires an API_Key, which
+you will have to provide yourself to make it work. 
