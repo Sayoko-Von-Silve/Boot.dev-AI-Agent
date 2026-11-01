@@ -1,3 +1,21 @@
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Retrieves the content of a specified file relative to the working directory",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to the file to retrieve content from, relative to the working directory",
+                },
+            },
+            "required": ["file_path"],
+        },
+    },
+}
+
 import os
 from config import FILE_MAX_CHARS_LIMIT
 

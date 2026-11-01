@@ -26,7 +26,7 @@ args = parser.parse_args()
 # Now we can access `args.user_prompt`
 
 from config import system_prompt
-from functions.call_function import available_functions
+from functions.call_function import available_functions, call_function
 
 def main():
     messages = [
@@ -53,8 +53,11 @@ def main():
     message = response.choices[0].message
     if message.tool_calls:
         for tool_call in message.tool_calls:
-            function_args = json.loads(tool_call.function.arguments or "{}") # type: ignore
-            print(f"Calling function: {tool_call.function.name}({function_args})") #type: ignore
+            result_message = call_function(tool_call, verbose=args.verbose)
+            if not result_message.get("content"):
+                raise Exception(f"Empty function response for {tool_call.function.name}")
+            if args.verbose:
+                print(f"-> {result_message['content']}")
     else:
         print(response.choices[0].message.content)
 

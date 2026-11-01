@@ -1,4 +1,4 @@
-from functions.write_to_file import write_file
+from functions.write_file import write_file
 
 print("Running test...\n")
 
